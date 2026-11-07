@@ -1,0 +1,137 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect FlashForge AD5X",
+        "description": "Powered-on printers on your LAN are auto-discovered below! Simply select your printer and enter the 8-character LAN Check Code from the AD5X touchscreen (or enter IP & Serial manually if the printer is currently powered off at a smart plug).",
+        "data": {
+          "discovered_printer": "Auto-Discovered Printer on LAN",
+          "host": "Printer IP Address / Hostname",
+          "serial_number": "Serial Number",
+          "check_code": "LAN Check Code",
+          "name": "Printer Display Name",
+          "validate_now": "Validate connection now"
+        }
+      },
+      "modules": {
+        "title": "Power, Notifications & Optional Modules",
+        "description": "Select an optional smart plug and mobile notification targets, and choose which optional features to enable. Disabled modules won't clutter your device with unused entities.",
+        "data": {
+          "smart_plug_entity": "Printer Smart Plug Switch (Optional)",
+          "cooldown_temp": "Safe Power-Off Cooldown Threshold (°C)",
+          "notify_targets": "Mobile Notification Targets (Optional)",
+          "enable_spoolman": "Enable Spoolman Filament & QR/NFC Management",
+          "enable_camera": "Enable Camera Integration (External and/or Native)",
+          "enable_timelapse": "Enable Configurable Timelapse Capture & MP4 Compiler",
+          "enable_obico": "Enable Obico ML Add-on (App) & Failure Detection",
+          "enable_files": "Enable Printer File Browser & Print Launcher",
+          "enable_gcode_console": "Enable Raw G-Code TCP Console (:8899)",
+          "enable_firmware_check": "Enable FlashForge Firmware Update Checker"
+        }
+      },
+      "spoolman": {
+        "title": "Spoolman Configuration",
+        "description": "Connect your Spoolman server (v0.27.0+ recommended for native NFC tag UID linking). When new filament is inserted into an IFS slot, you'll receive a notification to pick a spool, scan a QR code (`WEB+SPOOLMAN:S-{id}`), or scan an NFC tag.",
+        "data": {
+          "spoolman_url": "Spoolman Base URL",
+          "purge_mm_per_swap": "Purge Waste per Filament Swap (mm)",
+          "snap_printer_colors": "Snap Filament Colors to AD5X 24-Color Palette",
+          "spoolman_location_prefix": "Spoolman Active Slot Location Prefix"
+        }
+      },
+      "camera": {
+        "title": "Camera & Timelapse Configuration",
+        "description": "Choose between an External Camera (an existing Home Assistant camera entity or RTSP/HTTP URL), the AD5X's Native Camera, or Both.",
+        "data": {
+          "camera_mode": "Active Camera Mode",
+          "external_camera_entity": "External Home Assistant Camera Entity (Optional)",
+          "external_stream_url": "External RTSP / HTTP Stream URL (Optional)",
+          "external_camera_switch": "External Camera Power Switch (Optional)",
+          "native_stream_override": "Native AD5X Stream URL Override (Blank = Auto)",
+          "timelapse_fps": "Timelapse Video Framerate (FPS)",
+          "timelapse_output_dir": "Timelapse Save Directory",
+          "timelapse_crop": "Optional External Crop Filter (w:h:x:y, Blank = Full Frame)"
+        }
+      },
+      "obico": {
+        "title": "Obico ML Configuration",
+        "description": "Link your Obico ML Home Assistant App (Add-on) so it automatically starts when the printer turns on and stops when off to save RAM, enables detection while printing, and alerts/pauses on detected spaghetti.",
+        "data": {
+          "obico_addon_slug": "Obico ML Supervisor App / Add-on (Optional)",
+          "obico_camera_entity": "Obico Annotated Detection Camera",
+          "obico_switch_entity": "Obico API Communication Switch",
+          "obico_error_binary_sensor": "Obico Error Detected Binary Sensor",
+          "obico_confidence_sensor": "Obico Failure Confidence Sensor",
+          "obico_stop_delay_sec": "Stop Obico App Delay After Printer Offline (seconds)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not reach the FlashForge AD5X on port 8898. Check the IP address and LAN Mode, or uncheck 'Validate connection now' if powered off.",
+      "invalid_auth": "The printer rejected the Serial Number or LAN Check Code.",
+      "missing_host_or_serial": "Please enter both the Printer IP Address and Serial Number when configuring manually.",
+      "spoolman_unreachable": "Could not connect to Spoolman `/api/v1/info`. Check the Spoolman URL."
+    },
+    "abort": {
+      "already_configured": "This FlashForge AD5X serial number is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configure FlashForge AD5X & Modules",
+        "description": "Update connection details, smart plug, notification targets, or enable/disable optional modules.",
+        "data": {
+          "host": "Printer IP Address / Hostname",
+          "check_code": "LAN Check Code",
+          "smart_plug_entity": "Printer Smart Plug Switch (Optional)",
+          "cooldown_temp": "Safe Power-Off Cooldown Threshold (°C)",
+          "notify_targets": "Mobile Notification Targets (Optional)",
+          "enable_spoolman": "Enable Spoolman Filament & QR/NFC Management",
+          "enable_camera": "Enable Camera Integration (External and/or Native)",
+          "enable_timelapse": "Enable Configurable Timelapse Capture & MP4 Compiler",
+          "enable_obico": "Enable Obico ML Add-on (App) & Failure Detection",
+          "enable_files": "Enable Printer File Browser & Print Launcher",
+          "enable_gcode_console": "Enable Raw G-Code TCP Console (:8899)",
+          "enable_firmware_check": "Enable FlashForge Firmware Update Checker"
+        }
+      },
+      "spoolman": {
+        "title": "Spoolman Settings",
+        "data": {
+          "spoolman_url": "Spoolman Base URL",
+          "purge_mm_per_swap": "Purge Waste per Filament Swap (mm)",
+          "snap_printer_colors": "Snap Filament Colors to AD5X 24-Color Palette",
+          "spoolman_location_prefix": "Spoolman Active Slot Location Prefix"
+        }
+      },
+      "camera": {
+        "title": "Camera & Timelapse Settings",
+        "data": {
+          "camera_mode": "Active Camera Mode",
+          "external_camera_entity": "External Home Assistant Camera Entity (Optional)",
+          "external_stream_url": "External RTSP / HTTP Stream URL (Optional)",
+          "external_camera_switch": "External Camera Power Switch (Optional)",
+          "native_stream_override": "Native AD5X Stream URL Override (Blank = Auto)",
+          "timelapse_fps": "Timelapse Video Framerate (FPS)",
+          "timelapse_output_dir": "Timelapse Save Directory",
+          "timelapse_crop": "Optional External Crop Filter (w:h:x:y, Blank = Full Frame)"
+        }
+      },
+      "obico": {
+        "title": "Obico ML Settings",
+        "data": {
+          "obico_addon_slug": "Obico ML Supervisor App / Add-on (Optional)",
+          "obico_camera_entity": "Obico Annotated Detection Camera",
+          "obico_switch_entity": "Obico API Communication Switch",
+          "obico_error_binary_sensor": "Obico Error Detected Binary Sensor",
+          "obico_confidence_sensor": "Obico Failure Confidence Sensor",
+          "obico_stop_delay_sec": "Stop Obico App Delay After Printer Offline (seconds)"
+        }
+      }
+    },
+    "error": {
+      "spoolman_unreachable": "Could not connect to Spoolman `/api/v1/info`. Check the Spoolman URL."
+    }
+  }
+}

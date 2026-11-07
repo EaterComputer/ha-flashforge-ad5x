@@ -1,0 +1,14 @@
+{
+  "domain": "flashforge_ad5x",
+  "name": "FlashForge AD5X",
+  "after_dependencies": ["camera", "hassio", "lovelace"],
+  "codeowners": ["@EaterComputer"],
+  "config_flow": true,
+  "dependencies": ["frontend", "http"],
+  "documentation": "https://github.com/EaterComputer/ha-flashforge-ad5x",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/EaterComputer/ha-flashforge-ad5x/issues",
+  "requirements": [],
+  "version": "1.0.0"
+}

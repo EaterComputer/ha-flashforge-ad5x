@@ -1,0 +1,269 @@
+send_gcode:
+  name: Send Raw G-Code
+  description: Send a raw G-code or M-code command over TCP port 8899 and return the printer's response.
+  fields:
+    entry_id:
+      name: Printer Config Entry ID
+      description: Optional config entry ID if you have multiple AD5X printers.
+      selector:
+        text:
+    command:
+      name: G-Code Command
+      description: Command to execute (e.g. M115, M105, G28).
+      required: true
+      example: "M115"
+      selector:
+        text:
+
+jog:
+  name: Jog Printer Axis
+  description: Move the X, Y, or Z axis by a relative distance in millimeters.
+  fields:
+    entry_id:
+      name: Printer Config Entry ID
+      selector:
+        text:
+    axis:
+      name: Axis
+      required: true
+      selector:
+        select:
+          options:
+            - "x"
+            - "y"
+            - "z"
+    distance:
+      name: Distance (mm)
+      required: true
+      example: 10
+      selector:
+        number:
+          min: -220
+          max: 220
+          step: 0.1
+          unit_of_measurement: mm
+
+assign_spool:
+  name: Assign Spoolman Spool to IFS Slot
+  description: Assign a Spoolman spool to IFS Slot 1-4, push material/color to the AD5X, update Spoolman location, and optionally bind an NFC tag UID.
+  fields:
+    entry_id:
+      name: Printer Config Entry ID
+      selector:
+        text:
+    slot:
+      name: IFS Slot
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 4
+          step: 1
+    spool_id:
+      name: Spoolman Spool ID
+      required: true
+      example: 12
+      selector:
+        number:
+          min: 1
+          max: 999999
+    nfc_uid:
+      name: NFC Tag Hardware UID (Optional)
+      description: Optional NFC UID to permanently bind to this spool in Spoolman (v0.27.0+ native tags).
+      selector:
+        text:
+
+unassign_spool:
+  name: Unassign Spoolman Spool from IFS Slot
+  description: Clear the Spoolman spool mapping for an IFS slot and restore the spool's previous Spoolman location.
+  fields:
+    entry_id:
+      name: Printer Config Entry ID
+      selector:
+        text:
+    slot:
+      name: IFS Slot
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 4
+          step: 1
+
+configure_ifs_slot:
+  name: Configure IFS Slot Material & Color
+  description: Directly set the material name and hex color on an AD5X IFS slot without Spoolman.
+  fields:
+    entry_id:
+      name: Printer Config Entry ID
+      selector:
+        text:
+    slot:
+      name: IFS Slot
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 4
+          step: 1
+    material:
+      name: Material
+      required: true
+      example: "PLA"
+      selector:
+        text:
+    color:
+      name: Hex Color
+      required: true
+      example: "#45A8F9"
+      selector:
+        text:
+
+ifs_load_unload:
+  name: IFS Load / Unload Filament
+  description: Command the AD5X IFS station to load or unload filament for a specific slot.
+  fields:
+    entry_id:
+      name: Printer Config Entry ID
+      selector:
+        text:
+    slot:
+      name: IFS Slot
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 4
+          step: 1
+    operation:
+      name: Operation
+      required: true
+      default: "load"
+      selector:
+        select:
+          options:
+            - "load"
+            - "unload"
+
+start_print:
+  name: Start Print Job
+  description: Start printing a G-code/3MF file stored on the printer with single or multi-color IFS tool mappings.
+  fields:
+    entry_id:
+      name: Printer Config Entry ID
+      selector:
+        text:
+    filename:
+      name: File Name
+      description: File on the printer (defaults to currently selected file if omitted).
+      selector:
+        text:
+    slot:
+      name: Default IFS Slot
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 4
+          step: 1
+    tool_mappings:
+      name: Multi-Color Tool Mappings
+      description: 'Optional dictionary mapping slicer toolId (0, 1, 2, 3) to physical IFS slot (1-4), e.g. {"0": 1, "1": 3}.'
+      selector:
+        object:
+    leveling_before_print:
+      name: Bed Leveling Before Print
+      selector:
+        boolean:
+    flow_calibration:
+      name: Flow Calibration
+      selector:
+        boolean:
+    first_layer_inspection:
+      name: First Layer Inspection
+      selector:
+        boolean:
+
+upload_file:
+  name: Upload Local G-Code / 3MF File
+  description: Upload a local .gcode or .3mf file to the printer and optionally start printing immediately.
+  fields:
+    entry_id:
+      name: Printer Config Entry ID
+      selector:
+        text:
+    file_path:
+      name: Local File Path
+      required: true
+      example: "/config/www/gcode/benchy.3mf"
+      selector:
+        text:
+    slot:
+      name: IFS Slot
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 4
+          step: 1
+    print_now:
+      name: Start Print Immediately
+      selector:
+        boolean:
+    leveling_before_print:
+      name: Bed Leveling Before Print
+      selector:
+        boolean:
+    flow_calibration:
+      name: Flow Calibration
+      selector:
+        boolean:
+    first_layer_inspection:
+      name: First Layer Inspection
+      selector:
+        boolean:
+
+rename_printer:
+  name: Rename Printer
+  description: Update the AD5X printer's display name on the network.
+  fields:
+    entry_id:
+      name: Printer Config Entry ID
+      selector:
+        text:
+    name:
+      name: New Printer Name
+      required: true
+      selector:
+        text:
+
+check_firmware:
+  name: Check Firmware Updates
+  description: Query FlashForge OTA servers for Software, Control, Kernel, or Library updates.
+  fields:
+    entry_id:
+      name: Printer Config Entry ID
+      selector:
+        text:
+    current_software:
+      name: Software Version Override
+      selector:
+        text:
+
+download_firmware:
+  name: Download Firmware Update Package
+  description: Download a firmware archive from FlashForge OTA servers into /config/www/ff_updates/.
+  fields:
+    entry_id:
+      name: Printer Config Entry ID
+      selector:
+        text:
+    url:
+      name: Package Download URL
+      required: true
+      selector:
+        text:
+    filename:
+      name: Save Filename
+      selector:
+        text:
